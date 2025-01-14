@@ -6,24 +6,24 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/nd2_dask-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/nd2_dask-{{ version }}.tar.gz
   sha256: e54fb71de99f5884d2d5f18567784ef4fa87a0122d100e0a5b8fc7ab609703e9
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
     - pip
-    - python >=3.6,<3.10
+    - python {{ python_min }}
   run:
     - dask-core
     - napari-plugin-engine >=0.1.4
     - nd2reader
     - numpy
-    - python >=3.6,<3.10
+    - python >={{ python_min }},<3.10
     - toolz
     - vispy
 
@@ -35,6 +35,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/DragaDoncila/nd2-dask
